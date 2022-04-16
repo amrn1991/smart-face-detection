@@ -1,23 +1,20 @@
-import logo from './logo.svg';
+import Navigation from './components/navigation/Navigation';
+import Logo from './components/logo/Logo';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import Rank from './components/rank/Rank';
+import Particles from './components/particles/Particles';
 import './App.css';
+import 'tachyons';
 
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Particles />
+      <Navigation />
+      <Logo />
+      <Rank />
+      <ImageLinkForm />
     </div>
   );
 }
