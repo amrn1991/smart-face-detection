@@ -1,6 +1,6 @@
 import './ImageLinkForm.css';
 
-const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
+const ImageLinkForm = ({ onInputChange, onPictureSubmit }) => {
   return (
     <div>
       <p className="f4">
@@ -10,12 +10,13 @@ const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
         <div className="form App-center pa4 br3 shadow-5">
           <input
             type="text"
+            placeholder='Enter Image URL...'
             className="f5 center pa2 w-70"
             onChange={onInputChange}
           />
           <button
             className="w-30 grow f5 link ph3 pv2 dib white bg-light-purple App-button"
-            onClick={onButtonSubmit}
+            onClick={onPictureSubmit}
           >
             Detect
           </button>

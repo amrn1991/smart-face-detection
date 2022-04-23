@@ -15,6 +15,14 @@ function App() {
   const [box, setBox] = useState({});
   const [route, setRoute] = useState('signin');
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [user, setUser] = useState({
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    entries: 0,
+    joinedAt: '',
+  });
 
   const onInputChange = (event) => {
     setImageUrl(event.target.value);
@@ -41,7 +49,11 @@ function App() {
     setRoute(route);
   };
 
-  const onButtonSubmit = () => {
+  const loadUser = (user) => {
+    setUser(user);
+  };
+
+  const onPictureSubmit = () => {
     fetch('https://api.clarifai.com/v2/models/face-detection/outputs', {
       method: 'POST',
       headers: {
@@ -65,7 +77,19 @@ function App() {
       }),
     })
       .then((response) => response.text())
-      .then((result) => calculateFaceLocation(result))
+      .then((result) => {
+        if (result)
+          fetch('http://localhost:3001/image', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: user.id,
+            }),
+          })
+            .then((res) => res.json())
+            .then((count) => setUser({ ...user, entries: count }));
+        calculateFaceLocation(result);
+      })
       .catch((error) => console.log('error', error));
   };
   return (
@@ -75,17 +99,17 @@ function App() {
       {route === 'home' ? (
         <>
           <Logo />
-          <Rank />
+          <Rank user={user} />
           <ImageLinkForm
             onInputChange={onInputChange}
-            onButtonSubmit={onButtonSubmit}
+            onPictureSubmit={onPictureSubmit}
           />
           <FaceRecognition box={box} imageUrl={imageUrl} />
         </>
       ) : route === 'register' ? (
-        <Register onRouteChange={onRouteChange} />
+        <Register onRouteChange={onRouteChange} loadUser={loadUser} />
       ) : (
-        <Signin onRouteChange={onRouteChange} />
+        <Signin onRouteChange={onRouteChange} loadUser={loadUser} />
       )}
     </div>
   );

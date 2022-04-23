@@ -1,4 +1,31 @@
-const Signin = ({ onRouteChange }) => {
+import { useState } from 'react';
+
+const Signin = ({ onRouteChange, loadUser }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+  const onPassChange = (event) => {
+    setPassword(event.target.value);
+  };
+  const onSignIn = () => {
+    fetch('http://localhost:3001/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((user) => {
+        loadUser(user)
+        if (user) onRouteChange('home');
+      });
+  };
+
   return (
     <article className="br3 ba shadow-5 b--black-10 mv4 w-100 w-50-m w-25-l mw6 center">
       <main className="pa4 black-80">
@@ -14,6 +41,7 @@ const Signin = ({ onRouteChange }) => {
                 type="email"
                 name="email-address"
                 id="email-address"
+                onChange={onEmailChange}
               />
             </div>
             <div className="mv3">
@@ -25,12 +53,13 @@ const Signin = ({ onRouteChange }) => {
                 type="password"
                 name="password"
                 id="password"
+                onChange={onPassChange}
               />
             </div>
           </fieldset>
           <div>
             <input
-              onClick={() => onRouteChange('home')}
+              onClick={onSignIn}
               className="br2 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f5 dib"
               type="submit"
               value="Sign in"
