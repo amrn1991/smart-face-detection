@@ -10,22 +10,25 @@ import Register from './components/register/Register';
 import './App.css';
 import 'tachyons';
 
+const initialUserState = {
+  id: '',
+  name: '',
+  email: '',
+  password: '',
+  entries: 0,
+  joinedAt: '',
+}
+
 function App() {
   const [imageUrl, setImageUrl] = useState();
   const [box, setBox] = useState({});
   const [route, setRoute] = useState('signin');
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [user, setUser] = useState({
-    id: '',
-    name: '',
-    email: '',
-    password: '',
-    entries: 0,
-    joinedAt: '',
-  });
+  const [user, setUser] = useState(initialUserState);
 
   const onInputChange = (event) => {
     setImageUrl(event.target.value);
+    setBox({})
   };
   const calculateFaceLocation = (data) => {
     const locations =
@@ -44,7 +47,12 @@ function App() {
   const detectFace = (coords) => setBox(coords);
 
   const onRouteChange = (route) => {
-    if (route === 'signout') setIsSignedIn(false);
+    if (route === 'signout') {
+      setIsSignedIn(false)
+      setUser(initialUserState)
+      setImageUrl('')
+      setBox({})
+    }
     else if (route === 'home') setIsSignedIn(true);
     setRoute(route);
   };
