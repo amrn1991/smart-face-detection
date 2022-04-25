@@ -7,8 +7,8 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^14.1.0",
+    "@testing-library/react": "^13.0.1",
+    "@testing-library/user-event": "^14.1.1",
     "clarifai": "^2.9.1",
     "clarifai-nodejs-grpc": "^8.0.0",
     "path-browserify": "^1.0.1",
@@ -16,9 +16,9 @@
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.1",
     "react-tilt": "^0.1.4",
-    "react-tsparticles": "^2.0.5",
+    "react-tsparticles": "^2.0.6",
     "tachyons": "^4.12.0",
-    "tsparticles": "^2.0.5",
+    "tsparticles": "^2.0.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
