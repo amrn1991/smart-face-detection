@@ -17,7 +17,7 @@ const initialUserState = {
   password: '',
   entries: 0,
   joinedAt: '',
-}
+};
 
 function App() {
   const [imageUrl, setImageUrl] = useState();
@@ -28,14 +28,14 @@ function App() {
 
   const onInputChange = (event) => {
     setImageUrl(event.target.value);
-    setBox({})
+    setBox({});
   };
   const calculateFaceLocation = (data) => {
-    const locations =
-      JSON.parse(data).outputs[0].data.regions[0].region_info.bounding_box;
+    const locations = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
+
     detectFace({
       leftCol: locations.left_col * width,
       topRow: locations.top_row * height,
@@ -48,12 +48,11 @@ function App() {
 
   const onRouteChange = (route) => {
     if (route === 'signout') {
-      setIsSignedIn(false)
-      setUser(initialUserState)
-      setImageUrl('')
-      setBox({})
-    }
-    else if (route === 'home') setIsSignedIn(true);
+      setIsSignedIn(false);
+      setUser(initialUserState);
+      setImageUrl('');
+      setBox({});
+    } else if (route === 'home') setIsSignedIn(true);
     setRoute(route);
   };
 
@@ -62,29 +61,14 @@ function App() {
   };
 
   const onPictureSubmit = () => {
-    fetch('https://api.clarifai.com/v2/models/face-detection/outputs', {
+    fetch('http://localhost:3001/imageUrl', {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Key ${process.env.REACT_APP_SMART_BRAIN_API_KEY}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        user_app_id: {
-          user_id: 'amrfst',
-          app_id: '8e3696814fe64e60acb2e2b1d4c87625',
-        },
-        inputs: [
-          {
-            data: {
-              image: {
-                url: imageUrl,
-              },
-            },
-          },
-        ],
+        imageUrl,
       }),
     })
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((result) => {
         if (result)
           fetch('http://localhost:3001/image', {
