@@ -10,7 +10,7 @@ const Register = ({ onRouteChange, loadUser }) => {
   const onPassChange = (event) => setPassword(event.target.value);
 
   const onRegister = () => {
-    fetch('http://localhost:3001/register', {
+    fetch('https://guarded-hollows-90177.herokuapp.com/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

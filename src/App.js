@@ -61,7 +61,7 @@ function App() {
   };
 
   const onPictureSubmit = () => {
-    fetch('http://localhost:3001/imageUrl', {
+    fetch('https://guarded-hollows-90177.herokuapp.com/imageUrl', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -71,7 +71,7 @@ function App() {
       .then((response) => response.json())
       .then((result) => {
         if (result)
-          fetch('http://localhost:3001/image', {
+          fetch('https://guarded-hollows-90177.herokuapp.com/image', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
